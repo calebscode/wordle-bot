@@ -1,0 +1,28 @@
+{
+  "rows": [
+    {
+      "userId": 1111111111,
+      "rank": 1,
+      "name": "jimbo",
+      "average": 4.67,
+      "misses": 3,
+      "total": 16
+    },
+    {
+      "userId": 2222222222,
+      "rank": 2,
+      "name": "pinny skenis",
+      "average": 5.1,
+      "misses": 2,
+      "total": 14
+    },
+    {
+      "userId": 3333333333,
+      "rank": 3,
+      "name": "snover",
+      "average": 5.3,
+      "misses": 1,
+      "total": 15
+    }
+  ]
+}

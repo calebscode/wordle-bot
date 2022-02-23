@@ -1,0 +1,30 @@
+{
+  "name": "wordle-bot",
+  "version": "1.0.0",
+  "description": "A Discord bot to keep a ranking of me and my friends' daily scores in the game Wordle.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/calebscode/wordle-bot.git"
+  },
+  "author": "Caleb O'Malley",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/calebscode/wordle-bot/issues"
+  },
+  "homepage": "https://github.com/calebscode/wordle-bot#readme",
+  "dependencies": {
+    "@discordjs/builders": "^0.12.0",
+    "@discordjs/rest": "^0.3.0",
+    "discord-api-types": "^0.27.2",
+    "discord.js": "^13.6.0",
+    "dotenv": "^16.0.0",
+    "table": "^6.8.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.9.0"
+  }
+}
