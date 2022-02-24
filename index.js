@@ -1,36 +1,24 @@
-const { Client, Intents } = require('discord.js');
-const { table } = require('table');
-const { rows } = require('./leaderboard.json');
+const fs = require('fs');
+const { Client, Collection, Intents } = require('discord.js');
+const { RequestManager } = require('@discordjs/rest');
+
 
 require('dotenv').config();
 const token = process.env.DISCORD_TOKEN;
 
-function getLeaderboard() {
-    // create table here
-    let tableData = [];
-    let currentRow = [];
-
-    const header = ['Rank', 'Name', 'Avg', 'Misses'];
-    tableData.push(header);
-
-    for (let i = 0; i < rows.length; i++) {
-        console.log(rows[i]);
-        currentRow = [];
-        currentRow.push(rows[i].rank);
-        currentRow.push(rows[i].name);
-        currentRow.push(rows[i].average);
-        currentRow.push(rows[i].misses);
-
-        tableData.push(currentRow);
-    }
-    
-    return '`' + table(tableData) + '`';
-}
-
 // Create a new client instance
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 
-// When the client is ready, run this code (only once)
+// Read command files and associate them with the client
+client.commands = new Collection();
+const commandFiles = fs.readdirSync('./commands/').filter(file => file.endsWith('.js'));
+
+for(const file of commandFiles) {
+    const command = require(`./commands/${file}`);
+    client.commands.set(command.data.name, command);
+}
+
+// When the client is ready, let me know
 client.once('ready', () => {
 	console.log('Ready!');
 });
@@ -39,10 +27,15 @@ client.once('ready', () => {
 client.on('interactionCreate', async interaction => {
     if (!interaction.isCommand) return;
 
-    const { commandName } = interaction;
+    const command = client.commands.get(interaction.commandName);
 
-    if (commandName == 'leaderboard') {
-        await interaction.reply(getLeaderboard());
+    if (!command) return;
+
+    try {
+        await command.execute(interaction);
+    } catch (error) {
+        console.log(error);
+        await interaction.reply({ content: 'There was an error while fetching the current leaderboard!', ephemeral: true });
     }
 });
 
